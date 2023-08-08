@@ -18,4 +18,4 @@ $ pip install SpatialCluster
 
 ## Documentation
 
-https://spatialcluster.readthedocs.io/en/latest/
+https://spatial-cluster-english-doc.readthedocs.io/en/latest/index.html

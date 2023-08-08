@@ -1,13 +1,13 @@
 
-Documentación de SpatialCluster
+SpatialCluster Documentation
 ==================================================
 
-**SpatialCluster** es una librería de Python para generar mapas de atributos urbanos. Clusteriza datos geográficos y ofrece un uso *simple*. Para más información se recomienda leer la :doc:`usage`, incluyendo la sección de cómo
-:ref:`instalar <instalation>` el proyecto.
+**SpatialCluster** is a Python library for generating urban attribute maps. It clusters geographical data and provides a user-friendly experience. For more information, it is recommended to read the :doc:`usage`, section, including the part on how to
+:ref:`install <instalation>` the project.
 
 .. note::
 
-   Este proyecto aún se encuentra en desarrollo
+   This project is still under development.
 
 .. toctree::
    :maxdepth: 2
