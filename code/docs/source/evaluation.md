@@ -1,19 +1,19 @@
-Evaluación
+Evaluation
 ===========
 
-A continuación se ofrecen dos mediciones para comparar clusterings. Ambas son usadas comúnmente de forma conjunta ya que aún cuando su finalidad es la misma, tienen diferente base teórica. El valor es 0 cuando las particiones comparadas son aleatorias e independientes, y es 1 cuando son idénticas.
+Below are two measurements for comparing clusterings. Both are commonly used together since their purpose is the same, but they have different theoretical bases. The value is 0 when the compared partitions are random and independent, and it is 1 when they are identical.
 
 ARI
 ------------
 
-Para comparar dos clusterings de mapas de atributos se puede usar la función ARI (Adjusted Rand Index), la cual retorna un número real entre 0 y 1 que indica el grado de similaridad entre ambas soluciones.
+To compare two attribute map clusterings, you can use the ARI (Adjusted Rand Index) function, which returns a real number between 0 and 1 indicating the degree of similarity between the two solutions.
 
 ### Parámetros
 
-- **clustering_1**: *(Numpy Array)* Contiene los clusters a los que pertenece cada punto para el clustering 1.
-- **clustering_2**: *(Numpy Array)* Contiene los clusters a los que pertenece cada punto para el clustering 2.
+- **clustering_1**: *(Numpy Array)* Contains the clusters to which each point belongs for clustering 1.
+- **clustering_2**: *(Numpy Array)* Contains the clusters to which each point belongs for clustering 2.
 
-### Retorno
+### Return
 
 - **ARI**: *(float)* ARI score.
 
@@ -22,16 +22,16 @@ Para comparar dos clusterings de mapas de atributos se puede usar la función AR
    ari = ARI(clustering_1, clustering_2)
 ```
 
-En caso de que se quieran comparar más de un par de mapas a la vez, se puede generar una matriz que muestra la relación ARI para cada par de clusterings.
+If you want to compare more than one pair of maps at once, you can generate a matrix that shows the ARI relationship for each pair of clusterings.
 
-### Parámetros
+### Parameters
 
-- **clusterings**: *(Pandas DataFrame)* Contiene los clusters a los que pertenece cada punto para los distintos clusterings a comparar.
-- **plot**: *(bool)* Indica si se desea mostrar la matriz gráficamente.
+- **clusterings**: *(Pandas DataFrame)* Contains the clusters to which each point belongs for the different clusterings to be compared.
+- **plot**: *(bool)* Indicates whether to display the matrix graphically.
 
-### Retorno
+### Return
 
-- **ARI_matr**: *(Pandas DataFrame)* Contiene el ARI score para cada par de clusterings.
+- **ARI_matr**: *(Pandas DataFrame)* Contains the ARI score for each pair of clusterings.
 
 ```
    from SpatialCluster.metrics.ARI import ARI_matrix
@@ -42,14 +42,14 @@ En caso de que se quieran comparar más de un par de mapas a la vez, se puede ge
 AMI
 ------------
 
-Para comparar dos clusterings de mapas de atributos se puede usar la función AMI (Adjusted Mutual Information), la cual retorna un número real entre 0 y 1 que indica el grado de similaridad entre ambas soluciones.
+To compare two attribute map clusterings, you can use the AMI (Adjusted Mutual Information) function, which returns a real number between 0 and 1 indicating the degree of similarity between the two solutions.
 
-### Parámetros
+### Parameters
 
-- **clustering_1**: *(Numpy Array)* Contiene los clusters a los que pertenece cada punto para el clustering 1.
-- **clustering_2**: *(Numpy Array)* Contiene los clusters a los que pertenece cada punto para el clustering 2.
+- **clustering_1**: *(Numpy Array)* Contains the clusters to which each point belongs for clustering 1.
+- **clustering_2**: *(Numpy Array)* Contains the clusters to which each point belongs for clustering 2.
 
-### Retorno
+### Return
 
 - **AMI**: *(float)* AMI score.
 
@@ -58,16 +58,16 @@ Para comparar dos clusterings de mapas de atributos se puede usar la función AM
    ami = AMI(clusters_map1, clusters_map2)
 ```
 
-En caso de que se quieran comparar más de un par de mapas a la vez, se puede generar una matriz que muestra la relación AMI para cada par de clusterings.
+If you want to compare more than one pair of maps at once, you can generate a matrix that shows the AMI relationship for each pair of clusterings.
 
-### Parámetros
+### Parameters
 
-- **clusterings**: *(Pandas DataFrame)* Contiene los clusters a los que pertenece cada punto para los distintos clusterings a comparar.
-- **plot**: *(bool)* Indica si se desea mostrar la matriz gráficamente.
+- **clusterings**: *(Pandas DataFrame)* Contains the clusters to which each point belongs for the different clusterings to be compared.
+- **plot**: *(bool)* Indicates whether to display the matrix graphically.
 
-### Retorno
+### Return
 
-- **AMI_matr**: *(Pandas DataFrame)* Contiene el AMI score para cada par de clusterings.
+- **AMI_matr**: *(Pandas DataFrame)* Contains the AMI score for each pair of clusterings.
 
 ```
    from SpatialCluster.metrics.AMI import AMI_matrix

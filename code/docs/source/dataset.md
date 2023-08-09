@@ -1,88 +1,89 @@
 Dataset
 =======
 
-Origen
+Origin
 --------------
 
-El dataset originalmente corresponde a datos de unidades administrativas del censo de Santiago de Chile y otras fuentes a nivel de manzana, las cuales contienen distintas características que fueron agrupadas en 3 categorías: Visuales, Sociales y Suelo.
+The dataset originally consists of administrative unit data from the census of Santiago, Chile, and other sources at the block level. These data contain various attributes that were grouped into three categories: Visual, Social, and Land Use.
 
 
-Características Visuales
+Visual Attributes
 -------------------------
 
-Estas características fueron obtenidas a partir de fotografías del lugar físico correspondiente, las cuales fueron procesadas por una red neuronal de las cuales se consideraron las siguientes 6 características.
+These attributes were obtained from photographs of the corresponding physical locations, which were processed by a neural network. The following six visual characteristics were considered:
 
-    - beautiful: (float) Indica qué tanta belleza se percibe en el lugar de la imagen.
-    - boring: (float) Indica qué tan monótono se ve el lugar de la imagen.
-    - depressing: (float) Indica qué tan triste se percibe el lugar de la imagen.
-    - lively: (float) Indica qué tan vivo o emocionante se ve el lugar de la imagen.
-    - safe: (float) Indica qué tan seguro se ve el lugar de la imagen.
-    - wealth: (float) Indica qué tan lujoso se ve el lugar de la imagen.
+    - beautiful: (float) Indicates the perceived level of beauty in the image location.
+    - boring: (float) Indicates how monotonous the image location appears.
+    - depressing: (float) Indicates how sad the image location is perceived.
+    - lively: (float) Indicates how lively or exciting the image location appears.
+    - safe: (float) Indicates how safe the image location appears.
+    - wealth: (float) Indicates how luxurious the image location appears.
 
-Se aplicó Principal Components Analysis (PCA) para reducir el número de características. Se escogió el número de dimensiones de PCA que capturaran al menos 80% de la varianza, por lo que para las características visuales bastó con solo dos ("visual_0", "visual_1").
+Principal Components Analysis (PCA) was applied to reduce the number of features. The number of PCA dimensions that captured at least 80% of the variance was chosen, so for visual characteristics, only two dimensions ("visual_0", "visual_1") were sufficient.
 
-Características Sociales
+Social Attributes
 -------------------------
 
-Estas características fueron obtenidas apartir del nivel socioeconómico del Censo 2012, la proporción de habitantes inmigrantes del Censo 2017, el plebiscito constitucional 2020 y la primera ronda de las elecciones presidenciales 2021 estimadas a nivel de manzana, y por último se obtuvo datos de la distribución de apellidos basados en el índice alfa de Bro, N., Mendoza, M. (2021):
+These attributes were obtained from the socioeconomic level of the 2012 Census, the proportion of immigrant residents from the 2017 Census, the 2020 constitutional plebiscite, and the first round of the 2021 presidential elections, all estimated at the block level. Lastly, data on surname distribution based on the alpha index by Bro, N., Mendoza, M. (2021) were obtained:
 
-    - prom_nse: (float) Nivel socioeconómico promedio.
-    - edad_prom: (float) Edad promedio.
-    - porcentaje_inmigrantes: (float) Proporción de habitantes inmigrantes.
-    - prop_apruebo_promedio: (float) Proporción de habitantes que votaron apruebo en el Plebiscito Constitucional 2020.
-    - mapuche_prom: (float) Proporción de habitantes promedio con apellido mapuche.
-    - elite_prom: (float) Proporción de habitantes promedio con apellido de clase alta.
+    - prom_nse: (float) Average socioeconomic level.
+    - edad_prom: (float) Average age.
+    - porcentaje_inmigrantes: (float) Proportion of immigrant residents.
+    - prop_apruebo_promedio: (float) Proportion of residents who voted "approve" in the 2020 Constitutional Plebiscite.
+    - mapuche_prom: (float) Average proportion of residents with a Mapuche surname.
+    - elite_prom: (float) Average proportion of residents with an upper-class surname.
 
-Se aplicó Principal Components Analysis (PCA) para reducir el número de características. Se escogió el número de dimensiones de PCA que capturaran al menos 80% de la varianza, por lo que para las características sociales bastó con solo dos ("social_0", "social_1").
+Principal Components Analysis (PCA) was applied to reduce the number of features. The number of PCA dimensions that captured at least 80% of the variance was chosen, so for social characteristics, only two dimensions ("social_0", "social_1") were sufficient.
 
-Características de Suelo
+Land Use Attributes
 -------------------------
 
-Estas características corresponden a cómo el Estado clasifica las diferentes áreas de la ciudad con el propósito para la declaración de impuestos. De este se obtuvieron las siguientes características:
+These attributes correspond to how the state classifies different areas of the city for tax declaration purposes. The following attributes were obtained:
 
-    - prop_uso_A: (float) Proporción de uso de suelo destinado a Armamento.
-    - prop_uso_C: (float) Proporción de uso de suelo destinado a Comercio.
-    - prop_uso_D: (float) Proporción de uso de suelo destinado a Deporte.
-    - prop_uso_E: (float) Proporción de uso de suelo destinado a Educación.
-    - prop_uso_F: (float) Proporción de uso de suelo destinado a Forestal.
-    - prop_uso_G: (float) Proporción de uso de suelo destinado a Hotelería.
-    - prop_uso_H: (float) Proporción de uso de suelo destinado a Vivienda.
-    - prop_uso_I: (float) Proporción de uso de suelo destinado a Industria.
-    - prop_uso_K: (float) Proporción de uso de suelo destinado a No codificado.
-    - prop_uso_L: (float) Proporción de uso de suelo destinado a Almacenamiento.
-    - prop_uso_M: (float) Proporción de uso de suelo destinado a Minería.
-    - prop_uso_O: (float) Proporción de uso de suelo destinado a Negocio.
-    - prop_uso_P: (float) Proporción de uso de suelo destinado a Gobierno.
-    - prop_uso_Q: (float) Proporción de uso de suelo destinado a Culto.
-    - prop_uso_S: (float) Proporción de uso de suelo destinado a Salud.
-    - prop_uso_T: (float) Proporción de uso de suelo destinado a Transporte.
-    - prop_uso_V: (float) Proporción de uso de suelo destinado a Otro.
-    - prop_uso_W: (float) Proporción de uso de suelo destinado a Baldío.
-    - prop_uso_Z: (float) Proporción de uso de suelo destinado a Estacionamiento.
-    - total_m2_manzana: (float) Total de metros cuadrados que utiliza la manzana.
+    - prop_uso_A: (float) Proportion of land use designated for Armament.
+    - prop_uso_C: (float) Proportion of land use designated for Commerce.
+    - prop_uso_D: (float) Proportion of land use designated for Sports.
+    - prop_uso_E: (float) Proportion of land use designated for Education.
+    - prop_uso_F: (float) Proportion of land use designated for Forestry.
+    - prop_uso_G: (float) Proportion of land use designated for Hospitality.
+    - prop_uso_H: (float) Proportion of land use designated for Housing.
+    - prop_uso_I: (float) Proportion of land use designated for Industry.
+    - prop_uso_K: (float) Proportion of land use not coded.
+    - prop_uso_L: (float) Proportion of land use designated for Storage.
+    - prop_uso_M: (float) Proportion of land use designated for Mining.
+    - prop_uso_O: (float) Proportion of land use designated for Business.
+    - prop_uso_P: (float) Proportion of land use designated for Government.
+    - prop_uso_Q: (float) Proportion of land use designated for Worship.
+    - prop_uso_S: (float) Proportion of land use designated for Health.
+    - prop_uso_T: (float) Proportion of land use designated for Transport.
+    - prop_uso_V: (float) Proportion of land use designated for Other.
+    - prop_uso_W: (float) Proportion of land use designated for Vacant.
+    - prop_uso_Z: (float) Proportion of land use designated for Parking.
+    - total_m2_manzana: (float) Total square meters used by the block.
 
-Se aplicó Principal Components Analysis (PCA) para reducir el número de características. Se escogió el número de dimensiones de PCA que capturaran al menos 80% de la varianza, por lo que para las características de suelo se necesitaron cuatro("suelo_0", "suelo_1", "suelo_2", "suelo_3").
 
-Uso 
+Principal Components Analysis (PCA) was applied to reduce the number of features. The number of PCA dimensions that captured at least 80% of the variance was chosen, so for soil characteristics, four dimensions ("suelo_0", "suelo_1", "suelo_2", "suelo_3") were needed.
+
+Usage 
 ------------
 
-Para tener acceso al dataset basta con usar la siguiente función:
+To access the dataset, simply use the following function:
 
 ```
    from SpatialCluster.datasets import load_manzana_data
    df = load_manzana_data()
 ```
 
-Luego dependiendo del método que se quiera usar, se puede dar el formato correspondiente con las siguientes funciones:
+Depending on the method you want to use, you can format the data appropriately using the following functions:
 
-Si se desea usar el método KNN, se debe utilizar esta función.
+If you want to use the KNN method, use this function.
 
 ```
    from SpatialCluster.preprocess.data_format import attributes_with_zone_format
    features_position, features_X = attributes_with_zone_format(df, zona = "comuna")
 ```
 
-Si se desea usar cualquier otro método que ofrece SpatialCluster, se debe utilizar esta función.
+If you want to use any other method offered by SpatialCluster, use this function.
 
 ```
    from SpatialCluster.preprocess.data_format import attributes_format

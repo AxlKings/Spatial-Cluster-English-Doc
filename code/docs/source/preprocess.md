@@ -1,23 +1,23 @@
-Preprocesamiento
+Preprocessing
 ====================
 
 
-Dar formato a tabla
+Formatting Data Table
 --------------------
 
-Para obtener los datos separados en variables con el formato que utilizan los métodos de la librería se ofrecen dos funciones distintas.
+To obtain data separated into variables with the format used by the library's methods, two different functions are provided.
 
-La primera corresponde a *attributes_format* que entrega los datos separados en posición (longitud, latitud) y atributos.
+The first one is *attributes_format*, which separates the data into position (longitude, latitude) and attributes.
 
-### Parámetros
+### Parameters
 
-- **df**: *(Pandas DataFrame)* Contiene los datos a utilizar.
+- **df**: *(Pandas DataFrame)* Contains the data to be used.
 
-### Retorno
+### Return
 
-- **features_position**: *(Pandas DataFrame)* Contiene la longitud y latitud de los datos.
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud).
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude).
 
 
 ```
@@ -25,19 +25,19 @@ La primera corresponde a *attributes_format* que entrega los datos separados en 
    features_position, features_X = attributes_format(df)
 ```
 
-La segunda corresponde a *attributes_with_zone_format* que entrega los datos separados en posición (longitud, latitud) y atributos con una columna extra que indica a qué zona pertenece cada punto (en el dataset de ejemplo corresponde a la comuna).
+The second one is *attributes_with_zone_format*, which separates the data into position (longitude, latitude) and attributes with an additional column indicating the zone to which each point belongs (in the example dataset, this corresponds to "comuna").
 
-### Parámetros
+### Parameters
 
-- **df**: *(Pandas DataFrame)* Contiene los datos a utilizar.
+- **df**: *(Pandas DataFrame)* Contains the data to be used.
 
-- **zona**: *(string)* Nombre de la columna que contiene la zona a la que pertenece cada punto.
+- **zona**: *(string)* Name of the column that contains the zone to which each point belongs.
 
-### Retorno
+### Return
 
-- **features_position**: *(Pandas DataFrame)* Contiene la longitud y latitud de los datos.
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos incluyendo la columna de zona (sin longitud ni latitud).
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data, including the zone column (excluding longitude and latitude).
 
 ```
    from SpatialCluster.preprocess.data_format import attributes_with_zone_format
@@ -45,31 +45,31 @@ La segunda corresponde a *attributes_with_zone_format* que entrega los datos sep
 ```
 
 
-Matriz de adyacencia
+Adjacency Matrix
 ---------------------
 
-La función *adjacencyMatrix* crea una matriz de adyacencia en la que cada punto es relacionado con sus vecinos más cercanos siguiendo un criterio en específico.
+The *adjacencyMatrix* function creates an adjacency matrix in which each point is related to its nearest neighbors according to a specific criterion.
 
-Para crear la matriz de adyacencia se pueden usar los siguientes criterios para definir una vecindad:
+The following criteria can be used to define a neighborhood for creating the adjacency matrix:
 
-Por k vecinos más cercanos (criterio "*k*").
+By k nearest neighbors (criterion "*k*").
 
-Por vecinos dentro de un radio r (criterio "*r*").
+By neighbors within a radius r (criterion "*r*").
 
-Por vecinos dentro de un radio r, con un mínimo de k_min vecinos. En caso de que no hayan suficientes puntos para superar ese umbral, se usarán k vecinos más cercanos (criterio "*rk*").
+By neighbors within a radius r, with a minimum of k_min neighbors. If there are not enough points to meet this threshold, k nearest neighbors will be used (criterion "*rk*").
 
-### Parámetros
+### Parameters
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud).
-- **r**: *(float)* Distancia máxima en metros a la que se considerará a un punto como vecino (radio del vecindario para cada punto). Por defecto: 300.0
-- **k**: *(int)* Cantidad de vecinos máxima que tendrá el vecindario para cada punto. Por defecto: 5
-- **min_k**: *(int)* Cantidad mínima de vecinos que debe tener el vecindario en caso de usar el criterio "*rk*". Por defecto: 2
-- **criteria**: *(string)* Criterio que se usará para determinar los vecindarios (*k*, *r*, *rk*). Por defecto: "k"
-- **leafsize**: *(int)* Número de puntos en los que el algoritmo de KDTree de cambia a fuerza bruta. Para más información, revisar la [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Por defecto: 10
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude).
+- **r**: *(float)* Maximum distance in meters at which a point will be considered a neighbor (neighborhood radius for each point). Default: 300.0
+- **k**: *(int)* Maximum number of neighbors in the neighborhood for each point. Default: 5
+- **min_k**: *(int)* Minimum number of neighbors required for the neighborhood if using the "rk" criterion. Default: 2
+- **criteria**: *(string)* Criterion used to determine neighborhoods (*k*, *r*, *rk*). Default: "k"
+- **leafsize**: *(int)* Number of points at which the KDTree algorithm switches to brute force. For more information, refer to the [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Default: 10
 
-### Retorno
+### Return
 
-- **A**: *(Numpy Matrix)* Matriz de adyacencia
+- **A**: *(Numpy Matrix)* Adjacency matrix
 
 ```
    from SpatialCluster.preprocess.adjacency import adjacencyMatrix
@@ -77,37 +77,37 @@ Por vecinos dentro de un radio r, con un mínimo de k_min vecinos. En caso de qu
 ```
 
 
-Anillos
+Rings
 ------------
 
-La función *rings* utiliza la ponderación de los datos de los vecinos de cada punto, creando una nueva columna con estos datos. Esto se repite para cada columna original del dataset, permitiendo así suavizar la diferencia de los atributos entre puntos cercanos. Para cada columna original se crearán tantas columnas como cantidad de parámetros que se hayan ingresado en *max_radios* o *max_neighbours*, considerando para cada uno la nueva definición de vecindario correspondiente.
+The *rings* function uses the weighting of neighbors' data for each point, creating a new column with these weighted values. This process is repeated for each original column in the dataset, thus smoothing the difference in attributes between nearby points. For each original column, as many columns will be created as the number of parameters entered in *max_radios* or *max_neighbours*, considering the new corresponding neighborhood definition for each parameter.
 
-Por ejemplo: Si *max_radios* corresponde a (300, 400, 500), por cada columna de *features_X* se creará una columna que pondere definiendo vecindarios de 300 metros, luego otra columna que utilice vecindarios de 400 metros y finalmente otra columna que utilice vecindarios de 500 metros.
+For example: If *max_radios* corresponds to (300, 400, 500), for each column in *features_X*, a column will be created that uses neighborhoods of 300 meters, another column using neighborhoods of 400 meters, and finally another column using neighborhoods of 500 meters.
 
-Para crear los anillos se pueden usar los siguientes criterios para definir un vecindario:
+The following criteria can be used to define a neighborhood for creating the rings:
 
-- Por k vecinos más cercanos (criterio "*k*").
+- By k nearest neighbors (criterion "*k*").
 
-- Por vecinos dentro de un radio r (criterio "*r*").
+- By neighbors within a radius r (criterion "*r*").
 
-- Por vecinos dentro de un radio r, con un mínimo de k_min vecinos. En caso de que no hayan suficientes puntos para superar ese umbral, se usarán k vecinos más cercanos (criterio "*rk*").
+- By neighbors within a radius r, with a minimum of k_min neighbors. If there are not enough points to meet this threshold, k nearest neighbors will be used (criterion "*rk*").
 
-### Parámetros
+### Parameters
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud).
-- **features_position**: *(Pandas DataFrame)* Contiene longitud y latitud de los datos.
-- **criteria**: *(string)* Criterio que se usará para determinar los vecindarios (*k*, *r*, *rk*). Por defecto: "k"
-- **max_radios**: *(Lista de floats)* Lista de radios en metros que se utilizarán para definir los vecindarios. Por defecto: [200.0, 300.0, 400.0]
-- **max_neighbours**: *(Lista de ints)* Lista de cantidad máxima de puntos que tendrán los vecindarios. Por defecto: [200, 500, 1000]
-- **weight_mode**: *(string)* Criterio que se utilizará para la ponderación ("*Simple*" o "*Distance Inverse*"). Por defecto: "Simple"
-- **keep_original_value**: *(bool)* Determinará si se conservan las columnas originales o no. Por defecto: True
-- **smoothing**: *(float)* Parámetro que se utiliza para suavizar las distancias al momento de ponderar los datos (útil en caso de ponderar con el inverso de la distancia, en caso de que estas sean muy cercanas a 0). Por defecto: 1e-08
-- **normalize**: *(bool)* Determina si se normalizan las distancias, lo cual evita que al ponderar por el inverso de la distancia algunos datos sean sobrerrepresentados. Por defecto: True
-- **leafsize**: *(int)* Número de puntos en los que el algoritmo de KDTree de cambia a fuerza bruta. Para más información, revisar la [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Por defecto: 10
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude).
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
+- **criteria**: *(string)* Criterion used to determine neighborhoods (*k*, *r*, *rk*). Default: "k"
+- **max_radios**: *(List of floats)* List of radii in meters used to define neighborhoods. Default: [200.0, 300.0, 400.0]
+- **max_neighbours**: *(List of floats)* List of radii in meters used to define neighborhoods. Default: [200.0, 300.0, 400.0]
+- **weight_mode**: *(string)* Criterion used for weighting ("*Simple*" or "*Distance Inverse*"). Default: "Simple"
+- **keep_original_value**: *(bool)* Determines whether the original columns are kept or not. Default: True
+- **smoothing**: *(float)* Parameter used to smooth distances when weighting data (useful when weighting with the inverse of distance, in case these are very close to 0). Default: 1e-08
+- **normalize**: *(bool)* Determines whether distances are normalized, which prevents some data from being overrepresented when weighted by the inverse of distance. Default: True
+- **leafsize**: *(int)* Number of points at which the KDTree algorithm switches to brute force. For more information, refer to the [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html).  Default: 10
 
-### Retorno
+### Return
 
-- **features_rings**: *(Pandas DataFrame)* Contiene las nuevas columnas creadas.
+- **features_rings**: *(Pandas DataFrame)* Contains the newly created columns.
 
 ```
    from SpatialCluster.preprocess.rings import rings

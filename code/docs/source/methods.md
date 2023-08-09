@@ -1,31 +1,31 @@
-Métodos
+Methods
 ========
 
 DMoN
 ------------
 
-Deep Modular Neural network es una red neuronal basada en grafos (GNN) usada en este caso para realizar clustering no supervisado, se enfoca en optimizar la modularidad, la cual corresponde a una medida usada para determinar la calidad del clustering.
+Deep Modular Neural network (DMoN) is a graph-based neural network (GNN) used in this case for unsupervised clustering. It focuses on optimizing modularity, which is a measure used to determine the quality of clustering.
 
-### Parámetros
+### Parameters
 
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud). *DMoN* **no** trabaja con strings y se recomienda que los datos sean tipo float.
-- **features_position**: *(Pandas DataFrame)* Contiene longitud y latitud de los datos.
-- **A**: *(Numpy matrix)* Matriz de adyacencia utilizada. En caso de que no se entregue una, se utilizará el método de adjacencyMatrix de SpatialCluster para crearla. Por defecto: None
-- **criteria**: *(string)* Criterio que se usará para crear la matriz de adyacencia (*k*, *r*, *rk*). Por defecto: "k"
-- **r_max**: *(float)* Radio máximo en metros que se utilizará para la creación de la matriz de adyacencia en caso de ser necesario. Por defecto: 300.0
-- **n_clusters**: *(int)* Cantidad de clusters que considerará el método para agrupar los datos. Por defecto: 4
-- **reg**: *(float)* Parámetro dentro del rango [0,1] que pondera la regularización de la función de pérdida para así evitar soluciones triviales como agrupar todos los datos en el mismo cluster. Por defecto: 1.0
-- **dropout**: *(float)* Parámetro del rango [0,1] para evitar el sobreajuste a los datos (overfitting). Valores altos permitirán evitar más el sobreajuste, pero afectará el entrenamiento haciendo necesario más datos o más épocas (epochs). Por defecto: 0.0
-- **num_epochs**: *(int)* Indica cuánto durará el entrenamiento. Valores muy altos podrían provocar sobreajuste. Por defecto: 500
-- **learning_rate**: *(float)* Parámetro dentro del rango [0,1] que indica la tasa de ajustes que irá realizando la red en cada época. Valores muy altos permitirán un cambio más agresivo, lo cual puede provocar que no logre encontrar el punto óptimo. Valores bajos implicará que el aprendizaje será más lento por lo cuál necesitará más épocas y más datos para entrenar.
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude). *DMoN* **does not** work with strings, and it's recommended that the data be of float type.
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
+- **A**: *(Numpy matrix)* Adjacency matrix used. If not provided, the adjacencyMatrix method from SpatialCluster will be used to create one. Default: None
+- **criteria**: *(string)* Criterion used to create the adjacency matrix (*k*, *r*, *rk*). Default: "k"
+- **r_max**: *(float)* Maximum radius in meters used for adjacency matrix creation if needed. Default: 300.0
+- **n_clusters**: *(int)* Number of clusters considered by the method for grouping the data. Default: 4
+- **reg**: *(float)* Non-negative parameter within the range [0,1] that weights the regularization of the loss function to avoid trivial solutions like clustering all the data in the same cluster. Default: 1.0
+- **dropout**: *(float)* Parameter within the range [0,1] to prevent overfitting to the data. Higher values help prevent overfitting but can affect training, requiring more data or epochs. Default: 0.0
+- **num_epochs**: *(int)* Number of training epochs. Very high values might lead to overfitting. Default: 500
+- **learning_rate**: *(float)* Parameter within the range [0,1] indicating the rate of adjustments the network will make in each epoch. Very high values can lead to aggressive changes, potentially preventing it from finding the optimal solution. Low values mean slower learning, requiring more epochs and data for training.
 
-### Retorno
+### Return
 
-- **DMoN_areas_to_points**: *(dict)* Para cada cluster guarda los puntos que pertenecen a este.
-- **DMoN_clusters**: *(Numpy Array)* Contiene los puntos etiquetados según el cluster al que fueron asignado.
+- **DMoN_areas_to_points**: *(dict)* For each cluster, it stores the points belonging to that cluster.
+- **DMoN_clusters**: *(Numpy Array)* Contains points labeled according to the cluster they were assigned to.
 
-```
+``` 
    from SpatialCluster.methods.DMoN import DMoN_Clustering
    DMoN_areas_to_points, DMoN_clusters = DMoN_Clustering(features_X, features_position, A = None, criteria = "k", r_max = 300.0, n_clusters = 4, reg = 1.0, dropout = 0.0, num_epochs = 500, learning_rate = 0.001)
 ```
@@ -33,32 +33,32 @@ Deep Modular Neural network es una red neuronal basada en grafos (GNN) usada en 
 GMM
 ------------
 
-Este método permite utilizar una distribución de probabilidad del modelo de mezcla gaussiana para realizar clustering. 
+This method allows you to use a Gaussian Mixture Model (GMM) probability distribution for clustering.
 
-### Parámetros
+### Parameters
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud). *GMM* **no** trabaja con strings y se recomienda que los datos sean tipo float.
-- **features_position**: *(Pandas DataFrame)* Contiene longitud y latitud de los datos.
-- **n_clusters**: *(int)* Indica la cantidad de clusters que considerará el método para agrupar los datos. Por defecto: 4
-- **covariance_type**: *(string)* Describe el tipo de parámetros de covarianza. Debe ser uno de los siguientes:
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude). *GMM* **does not** work with strings, and it's recommended that the data be of float type.
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
+- **n_clusters**: *(int)* Number of clusters considered by the method for grouping the data. Default: 4
+- **covariance_type**: *(string)* Describes the type of covariance parameters. It must be one of the following:
 
-   - "full": Cada componente tiene su propia matriz de covarianza general.
+   - "full": Each component has its own general covariance matrix.
 
-   - "tied": Todos los componentes comparten la misma matriz de covarianza general.
+   - "tied": All components share the same general covariance matrix.
 
-   - "diag": Cada componente tiene su propia covarianza de matriz diagonal.
+   - "diag": Each component has its own diagonal covariance matrix.
 
-   - "spherical": Cada componente tiene su propia varianza individual.
+   - "spherical": Each component has its own individual variance.
 
-Por defecto: "full"
+Default: "full"
 
-- **tol**: *(float)* Umbral de tolerancia. Las iteraciones del proceso Expectation-Maximization (EM) pararán cuando la ganancia promedio de la cota inferior esté por debajo de este umbral. Por defecto: 1e-3
-- **reg_covar**: *(float)* Parámetro no negativo para la regularización añadida a la diagonal de la matriz de covarianza. Permite asegurar que las matrices de covarianza sean positivas. Por defecto: 1e-6
+- **tol**: *(float)* Tolerance threshold. Expectation-Maximization (EM) iterations will stop when the average gain of the lower bound is below this threshold. Default: 1e-3
+- **reg_covar**: *(float)* Non-negative parameter for regularization added to the diagonal of the covariance matrix. Ensures positive definite covariance matrices. Default: 1e-6
 
-### Retorno
+### Return
 
-- **GMM_areas_to_points**: *(dict)* Para cada cluster guarda los puntos que pertenecen a este.
-- **GMM_clusters**: *(Numpy Array)* Contiene los puntos etiquetados según el cluster al que fueron asignado.
+- **GMM_areas_to_points**: *(dict)* For each cluster, it stores the points belonging to that cluster.
+- **GMM_clusters**: *(Numpy Array)* Contains points labeled according to the cluster they were assigned to.
 
 ```
    from SpatialCluster.methods.GMM import GMM_Clustering
@@ -68,24 +68,25 @@ Por defecto: "full"
 KNN
 ------------
 
-K-Nearest Neighbours es un enfoque que evita el problema de la unidad espacial modificable (MAUP). Este método se basa en la agregación multiescalar de los *k* vecinos más cercanos de una localización en una comparación estadística con un área más grande de referencia en el que se utilizan *K* vecinos más cercanos (siendo *K > k*). Este método distingue entre dos tipos de clusters, los *hot spots* y los *cold spots*.
-### Parámetros
+K-Nearest Neighbors (KNN) is an approach that avoids the Modifiable Areal Unit Problem (MAUP). This method is based on multiscale aggregation of the *k* nearest neighbors of a location, comparing it statistically with a larger reference area where  *K* nearest neighbors are used (siendo *K > k*). This method distinguishes between two types of clusters: *hot spots* and *cold spots*.
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud).
-- **features_position**: *(Pandas DataFrame)* Contiene longitud y latitud de los datos.
-- **attribute**: *(string)* Indica qué columna de *features_X* se utilizará para caracterizar a los datos.
-- **threshold**: *(float/int/bool)* Umbral que determina si un dato cumple con el criterio según su columna *attribute*.
-- **location**: *(string)* Nombre de la columna de *features_X* que se utilizará para determinar la localización a la que pertenecen los datos (Por ejemplo: "comuna").
-- **condition**: *(string)* Operador que se utilizará (">", "<", ">=", "<=", "==") para ver si el dato cumple con la condición o no. Por defecto: "<"
-- **k**: *(int)* Cantidad mínima de vecinos cercanos que se utilizarán para la unidad de área más pequeña. Por defecto: 1500
-- **K**: *(int)* Cantidad mínima de vecinos cercanos que se utilizarán para la unidad de área más grande. Por defecto: 5000
-- **alfa**: *(float)* Umbral para evaluar si el dato corresponde a un *cold spot* o *hot spot* con una significancia estadística. Por defecto: 0.01
-- **leafsize**: *(int)* Número de puntos en los que el algoritmo de KDTree de cambia a fuerza bruta. Para más información, revisar la [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Por defecto: 10
+### Parameters
 
-### Retorno
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude).
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
+- **attribute**: *(string)* Indicates which column of features_X will be used to characterize the data.
+- **threshold**: *(float/int/bool)* Threshold determining if a data point meets the criterion based on its *attribute* column.
+- **location**: *(string)* Name of the column in *features_X* used to determine the location to which the data belongs (e.g., "comuna").
+- **condition**: *(string)* Operator used (">", "<", ">=", "<=", "==") to check if the data meets the condition or not. Default: "<"
+- **k**: *(int)* Minimum number of nearest neighbors used for the smaller area unit. Default: 1500
+- **K**: *(int)* Minimum number of nearest neighbors used for the larger area unit. Default: 5000
+- **alfa**: *(float)* Threshold to evaluate whether the data corresponds to a *cold spot* or *hot spot* with statistical significance. Default: 0.01
+- **leafsize**: *(int)* Number of points at which the KDTree algorithm switches to brute force. For more information, refer to the [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Default: 10
 
-- **KNN_areas_to_points**: *(dict)* Para cada cluster guarda los puntos que pertenecen a este.
-- **KNN_clusters**: *(Numpy Array)* Contiene los puntos etiquetados según el cluster al que fueron asignado.
+### Return
+
+- **KNN_areas_to_points**: *(dict)* For each cluster, it stores the points belonging to that cluster.
+- **KNN_clusters**: *(Numpy Array)* Contains points labeled according to the cluster they were assigned to.
 
 ```
    from SpatialCluster.methods.KNN import KNN_Clustering
@@ -95,21 +96,21 @@ K-Nearest Neighbours es un enfoque que evita el problema de la unidad espacial m
 SOM
 ------------
 
-Self Organized Map es un tipo de red neuronal artificial capaz de convertir relaciones estadísticas complejas y no lineales entre elementos de datos de alta dimensión en relaciones geométricas simples de baja dimensión. Este método aprovecha esta propiedad de SOM para realizar clustering.
+Self Organizing Map (SOM) is a type of artificial neural network capable of transforming complex and nonlinear statistical relationships between high-dimensional data elements into simple geometric relationships of low dimension. This method leverages this SOM property to perform clustering.
 
-### Parámetros
+### Parameters
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud). *SOM* no trabaja con strings y se recomienda que los datos sean tipo float.
-- **features_position**: *(Pandas DataFrame)* Contiene longitud y latitud de los datos.
-- **som_shape**: *(tupla de ints)* Determina la topología de la red neuronal que usará SOM de la forma (cantidad_filas, cantidad_columnas). Por defecto: (2,2)
-- **sigma**: *(float)* Dispersión de la función de vecindad, debe ser adecuada a la dimensión de SOM utilizada. Por defecto: 0.5
-- **learning_rate**: *(float)* Parámetro dentro del rango [0,1] que corresponde a la cantidad de información inicial que se compartirá entre neuronas en cada iteración del proceso de entrenamiento de la red. Por defecto: 0.5
-- **num_iterations**: *(int)* Cantidad de iteraciones que se realizarán en el proceso de entrenamiento. Por defecto: 100
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude). *SOM* does not work with strings, and it's recommended that the data be of float type.
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
+- **som_shape**: *(tuple of ints)* Determines the topology of the neural network that *SOM* will use in the form (number_of_rows, number_of_columns). Default: (2,2)
+- **sigma**: *(float)* Dispersion of the neighborhood function, should be appropriate for the *SOM* dimension used. Default: 0.5
+- **learning_rate**: *(float)* Parameter within the range [0,1] that corresponds to the amount of initial information shared between neurons in each iteration of the network's training process. Default: 0.5
+- **num_iterations**: *(int)* Number of iterations that will be performed in the training process. Default: 100
 
-### Retorno
+### Return
 
-- **SOM_areas_to_points**: *(dict)* Para cada cluster guarda los puntos que pertenecen a este.
-- **SOM_clusters**: *(Numpy Array)* Contiene los puntos etiquetados según el cluster al que fueron asignado.
+- **SOM_areas_to_points**: *(dict)* For each cluster, it stores the points belonging to that cluster.
+- **SOM_clusters**: *(Numpy Array)* Contains points labeled according to the cluster they were assigned to.
 
 ```
    from SpatialCluster.methods.SOM import SOM_Clustering
@@ -119,21 +120,21 @@ Self Organized Map es un tipo de red neuronal artificial capaz de convertir rela
 TDI
 ------------
 
-TDI corresponde a un método basado en Teoría de la Información, la cual utiliza una matriz de pesos utilizando la divergencia de Shannon como distancia entre los puntos. Luego se aplica Spectral Clustering sobre esta matriz. Este método permite curvas de perfil con escala espacial no constante y análisis de descomposición con unidades de área no arbitrarias.
+TDI stands for a method based on Information Theory. It uses a weight matrix with Shannon divergence as the distance between points. Then, Spectral Clustering is applied to this matrix. This method allows profile curves with non-constant spatial scales and decomposition analysis with non-arbitrary area units.
 
-### Parámetros
+### Parameters
 
-- **features_X**: *(Pandas DataFrame)* Contiene los atributos de los datos (sin longitud ni latitud). *TDI* no trabaja con strings y se recomienda que los datos sean tipo float.
-- **features_position**: *(Pandas DataFrame)* Contiene longitud y latitud de los datos.
-- **n_clusters**: *(int)* Indica la cantidad de clusters que considerará el método para agrupar los datos. Por defecto: 4
-- **A**: *(Numpy matrix)* Matriz de adyacencia que representará la topología del grafo que se utilizará para realizar *Spectral clustering*. Esta matriz debe representar un grafo conexo y simétrico para asegurar resultados coherentes. En caso de que no se entregue ninguna matriz, se utilizará *adjacencyMatrix* para crear una. Por defecto: None
-- **k**: *(int)* Cantidad de vecinos máxima que tendrá el vecindario para cada punto. Por defecto: 20
-- **leafsize**: Corresponde al número de puntos en los que el algoritmo de KDTree de cambia a fuerza bruta. Para más información, revisar la [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Por defecto: 10
+- **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude). *TDI* does not work with strings, and it's recommended that the data be of float type.
+- **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
+- **n_clusters**: *(int)* Indicates the number of clusters that the method will consider for grouping the data. Default: 4
+- **A**: *(Numpy matrix)* Adjacency matrix representing the topology of the graph used for *Spectral clustering*. This matrix should represent a connected and symmetric graph to ensure consistent results. If no matrix is provided, the *adjacencyMatrix* will be used to create one. Default: None
+- **k**: *(int)* Maximum number of nearest neighbors that the neighborhood will have for each point. Default: 20
+- **leafsize**: Corresponds to the number of points at which the KDTree algorithm switches to brute force. For more information, refer to the [Documentación de KDTree](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.KDTree.html). Default: 10
 
-### Retorno
+### Return
 
-- **TDI_areas_to_points**: *(dict)* Para cada cluster guarda los puntos que pertenecen a este.
-- **TDI_clusters**: *(Numpy Array)* Contiene los puntos etiquetados según el cluster al que fueron asignado.  
+- **TDI_areas_to_points**: *(dict)* For each cluster, it stores the points belonging to that cluster.
+- **TDI_clusters**: *(Numpy Array)* Contains points labeled according to the cluster they were assigned to.
 
 ```
    from SpatialCluster.methods.TDI import TDI_Clustering

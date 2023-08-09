@@ -1,44 +1,44 @@
-Visualización
+Visualization
 ===============
 
-Graficar Mapa completo
+Plot Complete Map
 -----------------------
 
-El siguiente método genera el mapa con todos los puntos, coloreados según el cluster asignado.
+The following method generates a map with all the points, colored according to the assigned cluster.
 
-### Parámetros
+### Parameters
 
-- **gdf**: *(GeoPandas DataFrame)* Contiene los clusters a los que pertenece cada punto y la geometría para localizarlos geográficamente en el mapa. En caso de que la columna "geometry" no exista, el método la generará a partir de las columnas "lon" y "lat".
-- **markersize**: *(int)* Tamaño de los puntos en el mapa. Por defecto: 30
-- **figsize**: *(Tupla de ints)* Tamaño de la figura que contendrá el mapa. Por defecto: (12,8)
-- **path**: *(string)* Indica la ruta y el nombre que se usará para guardar el archivo (ej: "/mapas/mapa.png"). Por defecto: None
+- **gdf**: *(GeoPandas DataFrame)* Contains the clusters to which each point belongs and the geometry to locate them geographically on the map. If the "geometry" column does not exist, the method will generate it from the "lon" and "lat" columns.
+- **markersize**: *(int)* Size of the points on the map. Default: 30
+- **figsize**: *(Tuple of ints)* Size of the figure that will contain the map. Default: (12,8)
+- **path**: *(string)* Indicates the path and name to be used for saving the file (e.g., "/maps/map.png"). Default: None
 
-### Retorno
+### Return
 
-- No retorna nada, dibuja el mapa generado.
+- Does not return anything, it plots the generated map.
 
 ```
    from SpatialCluster.visualization.plotters import plot_map
    plot_map(gdf, markersize=30, figsize=(12,8), path=None)
 ```
 
-Graficar Muestreo aleatorio
+Plot Random Sampling
 ----------------------------
 
-El siguiente método genera un mapa interactivo con un muestreo aleatorio de los puntos, coloreados según el cluster asignado.
+The following method generates an interactive map with a random sampling of the points, colored according to the assigned cluster.
 
-### Parámetros
+### Parameters
 
-- **areas_to_points**: *(dict)* Diccionario que para cada cluster guarda los puntos que pertenecen a este.
-- **min_supp**: *(int)* Cantidad mínima de puntos que debe tener un cluster para aparecer.
-- **max_samples_per_clusters**: *(int)* Cantidad máxima de puntos que se mostrarán por cada clúster.
-- **location**: *(Tupla de ints)* Longitud y latitud de dónde estará posicionado el centro del mapa. Por defecto: (-33.45, -70.65)
-- **radius**: *(int)* Tamaño del círculo que representará a cada punto. Por defecto: 10
-- **path**: *(string)* Indica la ruta y el nombre que se usará para guardar el archivo (ej: "/mapas/mapa.html"). Por defecto: None
+- **areas_to_points**: *(dict)* A dictionary that stores the points belonging to each cluster.
+- **min_supp**: *(int)* Minimum number of points a cluster must have to appear.
+- **max_samples_per_clusters**: *(int)* Maximum number of points to be shown for each cluster.
+- **location**: *(Tuple of ints)* Longitude and latitude of the map's center position. Default: (-33.45, -70.65)
+- **radius**: *(int)* Size of the circle representing each point. Default: 10
+- **path**: *(string)* Indicates the path and name to be used for saving the file (e.g., "/maps/map.html"). Default: None
 
-### Retorno
+### Return
 
-- **hmap**: *(Folium Map)* Mapa interactivo generado.
+- **hmap**: *(Folium Map)* Generated interactive map.
 
 ```
    from SpatialCluster.visualization.plotters import plot_map_sample
