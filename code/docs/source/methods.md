@@ -102,7 +102,8 @@ Self Organizing Map (SOM) is a type of artificial neural network capable of tran
 
 - **features_X**: *(Pandas DataFrame)* Contains the attributes of the data (excluding longitude and latitude). *SOM* does not work with strings, and it's recommended that the data be of float type.
 - **features_position**: *(Pandas DataFrame)* Contains the longitude and latitude of the data.
-- **som_shape**: *(tuple of ints)* Determines the topology of the neural network that *SOM* will use in the form (number_of_rows, number_of_columns). Default: (2,2)
+- **n_clusters**: *(int)* Indica la cantidad de clusters que considerará el método para agrupar los datos. Por defecto: 4
+- **som_shape**: *(tuple of ints)* Determines the topology of the neural network that *SOM* will use in the form (number_of_rows, number_of_columns). Default: (3,3)
 - **sigma**: *(float)* Dispersion of the neighborhood function, should be appropriate for the *SOM* dimension used. Default: 0.5
 - **learning_rate**: *(float)* Parameter within the range [0,1] that corresponds to the amount of initial information shared between neurons in each iteration of the network's training process. Default: 0.5
 - **num_iterations**: *(int)* Number of iterations that will be performed in the training process. Default: 100
